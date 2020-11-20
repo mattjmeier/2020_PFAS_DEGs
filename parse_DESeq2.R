@@ -17,9 +17,13 @@ DESeq2Results <- tsv_files %>%
   extract(group, into=c("chemical","dose"), regex="([[:alpha:]]+)([[:digit:]\\.]+)") %>%
   mutate(group = paste0(timepoint,"_",chemical,"_",dose))
 
-DEG_summary <- DESeq2Results %>% group_by(group) %>% dplyr::tally()
+DEG_summary <- DESeq2Results %>% 
+  group_by(group) %>% 
+  dplyr::tally()
 
-genes_per_group <- DESeq2Results %>% group_by(group) %>% dplyr::select(geneSymbol)
+genes_per_group <- DESeq2Results %>% 
+  group_by(group) %>% 
+  dplyr::select(geneSymbol)
 
 write.table(DEG_summary,
             paste0(here(),"/DEG_summary.txt"),
